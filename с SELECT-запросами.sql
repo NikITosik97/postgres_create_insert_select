@@ -21,9 +21,9 @@ WHERE collection_year BETWEEN '2018-01-01' AND '2021-01-01'
 
 --Исполнители, чьё имя состоит из одного слова.
 
---SELECT musician_name
---FROM musicians
---WHERE musician_name LIKE '%'
+SELECT musician_name
+FROM musicians
+WHERE NOT musician_name LIKE '% %'
 
 --Название треков, которые содержат слово «мой» или «my».
 
@@ -37,8 +37,8 @@ WHERE track_name LIKE '%Мой%' OR track_name LIKE '%my%'
 
 SELECT genre_name, COUNT(fk_musician_id)
 FROM genres_musicians
-JOIN genres ON genres.genre_id = genres_musicians.fk_genre_id 
-GROUP BY genres.genre_name 
+JOIN genres ON genres.genre_id = genres_musicians.fk_genre_id
+GROUP BY genres.genre_name
 
 --Количество треков, вошедших в альбомы 2019–2020 годов.
 
