@@ -4,8 +4,8 @@
 
 SELECT track_name, duration
 FROM tracks
-ORDER BY duration DESC
-LIMIT 1
+WHERE duration = (SELECT MAX(duration) FROM tracks)
+
 
 --Название треков, продолжительность которых не менее 3,5 минут.
 
@@ -66,10 +66,14 @@ GROUP BY musicians.musician_name
 
 --Названия сборников, в которых присутствует конкретный исполнитель (выберите его сами).
 
-SELECT collection_name
+SELECT DISTINCT collection_name
 FROM collections
-JOIN musicians ON musicians.musician_id = collections.collection_id
-WHERE musician_name = 'KIZARU'
+JOIN collections_tracks ON collections_tracks.fk_collection_id = collections.collection_id
+JOIN tracks ON collections_tracks.fk_track_id = tracks.track_id
+JOIN albums ON tracks.fk_album_id = albums.album_id
+JOIN albums_musicians ON albums.album_id = albums_musicians.fk_album_id
+JOIN musicians ON musicians.musician_id = albums_musicians.fk_musician_id
+WHERE musicians.musician_name = 'KIZARU'
 
 
 
